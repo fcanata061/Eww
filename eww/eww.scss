@@ -1,89 +1,136 @@
+/* =======================
+   EWW STYLES (Xorg config)
+   ======================= */
+
+* {
+  all: unset;
+  font-family: "JetBrainsMono Nerd Font", "Material Icons", sans-serif;
+}
+
+/* ---------- Sidebar ---------- */
 .sidebar {
-  background: #1c1c1c;
-  padding: 20px 0;
-  color: #ffffff;
+  background: #1e1e2e;
+  padding: 16px 0;
+  border-radius: 0 20px 20px 0;
+  box-shadow: 2px 0 6px rgba(0, 0, 0, 0.6);
 }
 
-.sidebar button {
-  background: none;
-  border: none;
-  color: #89b4fa;
-  font-size: 22px;
+.sidebtn {
+  font-size: 28px;
+  color: #89b4fa; /* azul padrão */
+  padding: 12px;
+  border-radius: 12px;
+  transition: background 0.2s, color 0.2s;
 }
 
-.sidebar button:hover {
-  color: #f38ba8;
+.sidebtn:hover {
+  background: #313244;
+  color: #f5c2e7; /* rosa */
 }
 
+/* ---------- Popup ---------- */
 .popup {
   background: #1e1e2e;
-  border-radius: 20px;
-  padding: 20px;
-  color: #eeeeee;
-  box-shadow: 0px 4px 25px rgba(0,0,0,0.6);
+  padding: 24px;
+  border-radius: 24px;
+  box-shadow: 0px 4px 20px rgba(0,0,0,0.8);
+  color: #cdd6f4;
 }
 
-.clock-red {
-  font-size: 32px;
-  color: #f38ba8;
+/* relógio multicolor */
+.clock-h {
+  font-size: 64px;
   font-weight: bold;
+  color: #89b4fa; /* azul */
 }
-
-.clock-blue {
-  font-size: 32px;
-  color: #89b4fa;
+.clock-m {
+  font-size: 64px;
   font-weight: bold;
+  color: #f5c2e7; /* rosa */
 }
-
-.clock-orange {
+.clock-s {
   font-size: 32px;
-  color: #fab387;
   font-weight: bold;
+  color: #fab387; /* laranja */
+  margin-top: 16px;
+}
+.clock-colon {
+  font-size: 64px;
+  color: #cdd6f4;
 }
 
 .uptime {
   font-size: 14px;
   color: #a6adc8;
-  margin-bottom: 10px;
 }
 
-.calendar {
+/* ---------- Calendário ---------- */
+calendar {
   background: #313244;
-  border-radius: 12px;
+  border-radius: 16px;
   padding: 12px;
-  color: #cdd6f4;
 }
 
-.weather {
+calendar:selected {
+  background: #f5c2e7;
+  color: #1e1e2e;
+  border-radius: 50%;
+}
+
+calendar.header {
+  color: #89b4fa;
+  font-weight: bold;
+}
+
+/* ---------- Cartões de clima ---------- */
+.weather-card {
   background: #313244;
-  border-radius: 12px;
-  padding: 10px;
+  border-radius: 18px;
+  padding: 16px;
   color: #cdd6f4;
-  text-align: center;
 }
 
 .weather-city {
   font-weight: bold;
+  font-size: 16px;
+  color: #89b4fa;
 }
-
-.weather-temp {
-  font-size: 18px;
-  font-weight: bold;
-  color: #89dceb;
-}
-
-.weather-desc {
+.weather-feels {
   font-size: 12px;
   color: #a6adc8;
 }
-
-.power button {
-  background: #45475a;
-  padding: 10px 15px;
-  border-radius: 10px;
-  font-size: 18px;
+.weather-desc {
+  font-size: 12px;
+  color: #f5c2e7;
+}
+.weather-temp {
+  font-size: 32px;
+  font-weight: bold;
+  color: #fab387;
 }
 
-.power button:hover {
-  background: #585b70;
+/* ---------- Botões de energia ---------- */
+.power-row {
+  margin-top: 12px;
+}
+
+.pwr {
+  font-size: 24px;
+  padding: 14px;
+  border-radius: 18px;
+  background: #313244;
+  color: #cdd6f4;
+  transition: background 0.2s, color 0.2s;
+}
+
+.pwr:hover {
+  background: #f5c2e7;
+  color: #1e1e2e;
+}
+
+/* ---------- Imagem decorativa ---------- */
+.footer-img image {
+  border-radius: 16px;
+  margin-top: 16px;
+  opacity: 0.9;
 }
