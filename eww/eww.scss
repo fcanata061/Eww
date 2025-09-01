@@ -1,0 +1,89 @@
+.sidebar {
+  background: #1c1c1c;
+  padding: 20px 0;
+  color: #ffffff;
+}
+
+.sidebar button {
+  background: none;
+  border: none;
+  color: #89b4fa;
+  font-size: 22px;
+}
+
+.sidebar button:hover {
+  color: #f38ba8;
+}
+
+.popup {
+  background: #1e1e2e;
+  border-radius: 20px;
+  padding: 20px;
+  color: #eeeeee;
+  box-shadow: 0px 4px 25px rgba(0,0,0,0.6);
+}
+
+.clock-red {
+  font-size: 32px;
+  color: #f38ba8;
+  font-weight: bold;
+}
+
+.clock-blue {
+  font-size: 32px;
+  color: #89b4fa;
+  font-weight: bold;
+}
+
+.clock-orange {
+  font-size: 32px;
+  color: #fab387;
+  font-weight: bold;
+}
+
+.uptime {
+  font-size: 14px;
+  color: #a6adc8;
+  margin-bottom: 10px;
+}
+
+.calendar {
+  background: #313244;
+  border-radius: 12px;
+  padding: 12px;
+  color: #cdd6f4;
+}
+
+.weather {
+  background: #313244;
+  border-radius: 12px;
+  padding: 10px;
+  color: #cdd6f4;
+  text-align: center;
+}
+
+.weather-city {
+  font-weight: bold;
+}
+
+.weather-temp {
+  font-size: 18px;
+  font-weight: bold;
+  color: #89dceb;
+}
+
+.weather-desc {
+  font-size: 12px;
+  color: #a6adc8;
+}
+
+.power button {
+  background: #45475a;
+  padding: 10px 15px;
+  border-radius: 10px;
+  font-size: 18px;
+}
+
+.power button:hover {
+  background: #585b70;
+}
