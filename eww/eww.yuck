@@ -1,65 +1,102 @@
-;; ========================
-;; Barra lateral
-;; ========================
+;;; ============================
+;;; LAYOUT — Xorg (sidebar + popup)
+;;; ============================
+
+;; -------- Sidebar (fixa à esquerda)
 (defwindow sidebar
-  :monitor 0
-  :geometry (geometry :x "0px" :y "0%" :width "60px" :height "100%" :anchor "left center")
+  :monitor "<primary>"
+  :geometry (geometry :x "0px" :y "0%" :width "64px" :height "100%" :anchor "left center")
   :stacking "fg"
-  :reserve (struts :distance "60px" :side "left")
   :windowtype "dock"
-  (box :orientation "vertical" :class "sidebar" :spacing 20 :halign "center" :valign "center"
-    (button :onclick "eww toggle sys_popup" (label :text ""))
-    (button :onclick "eww toggle sys_popup" (label :text ""))
-    (button :onclick "eww toggle sys_popup" (label :text ""))
-    (button :onclick "eww toggle sys_popup" (label :text ""))
-    (button :onclick "eww toggle sys_popup" (label :text ""))
-    (button :onclick "eww toggle sys_popup" (label :text ""))
+  :reserve (struts :distance "64px" :side "left")
+  (box :class "sidebar" :orientation "vertical" :spacing 18 :halign "center" :valign "center"
+    ;; Ícones (Nerd Fonts). Todos ligam/desligam o mesmo popup da foto.
+    (button :class "sidebtn" :onclick "eww toggle popup_main" (label :text "")) ; marcador/local (ex: clima)
+    (button :class "sidebtn" :onclick "eww toggle popup_main" (label :text "󰥔")) ; relógio
+    (button :class "sidebtn" :onclick "eww toggle popup_main" (label :text "󰋜")) ; “home”
+    (button :class "sidebtn" :onclick "eww toggle popup_main" (label :text "󰄄")) ; câmera
+    (button :class "sidebtn" :onclick "eww toggle popup_main" (label :text "󰔟")) ; volume
+    (button :class "sidebtn" :onclick "eww toggle popup_main" (label :text "⏻"))  ; power
   )
 )
 
-;; ========================
-;; Popup superior
-;; ========================
-(defwindow sys_popup
-  :geometry (geometry :x "80px" :y "50%" :width "420px" :height "540px" :anchor "left center")
+;; -------- POPUP (aparece ao clicar; some ao clicar de novo)
+(defwindow popup_main
+  :monitor "<primary>"
+  :geometry (geometry :x "80px" :y "50%" :width "420px" :height "520px" :anchor "left center")
   :stacking "fg"
-  (box :orientation "vertical" :class "popup" :spacing 20 :halign "center"
-    
-    ;; Relógio colorido
-    (box :orientation "horizontal" :spacing 8 :halign "center"
-      (label :class "clock-red" :text "${time_h}")
-      (label :class "clock-blue" :text "${time_m}")
-      (label :class "clock-orange" :text "${time_s}")
-    )
-    (label :class "uptime" :text "${uptime}")
+  (box :class "popup" :orientation "vertical" :spacing 16
 
-    ;; Calendário
+    ;; Cabeçalho (relógio multicolor + uptime)
+    (box :orientation "vertical" :halign "center" :spacing 4
+      (box :orientation "horizontal" :spacing 6 :halign "center"
+        (label :class "clock-h" :text "${time_h}")
+        (label :class "clock-colon" :text ":")
+        (label :class "clock-m" :text "${time_m}")
+        (label :class "clock-colon" :text ":")
+        (label :class "clock-s" :text "${time_s}")
+      )
+      (label :class "uptime" :text "uptime: ${uptime}")
+    )
+
+    ;; Calendário (igual à foto; estilo virá no SCSS)
     (calendar :class "calendar")
 
-    ;; Clima
-    (box :class "weather" :orientation "vertical" :spacing 5
-      (label :class "weather-city" :text "${weather_city}")
-      (label :class "weather-temp" :text "${weather_temp}°C")
-      (label :class "weather-desc" :text "${weather_desc}")
+    ;; Cartão de clima
+    (box :class "weather-card" :orientation "horizontal" :spacing 10 :halign "fill"
+      (box :orientation "vertical" :hexpand true
+        (label :class "weather-city" :text "${weather_city}")
+        (label :class "weather-feels" :text "feels like ${weather_feels}°")
+        (label :class "weather-desc" :text "${weather_desc}")
+      )
+      (label :class "weather-temp" :text "${weather_temp}°")
     )
 
-    ;; Botões de energia
-    (box :orientation "horizontal" :spacing 20 :class "power"
-      (button :onclick "systemctl poweroff" (label :text "⏻"))
-      (button :onclick "systemctl reboot" (label :text ""))
-      (button :onclick "systemctl suspend" (label :text ""))
-      (button :onclick "pkill -KILL -u $USER" (label :text ""))
+    ;; (opcional) segundo cartão de clima, deixe comentado se não quiser
+    ;(box :class "weather-card" :orientation "horizontal" :spacing 10 :halign "fill"
+    ;  (box :orientation "vertical" :hexpand true
+    ;    (label :class "weather-city" :text "${weather_city2}")
+    ;    (label :class "weather-feels" :text "feels like ${weather_feels2}°")
+    ;    (label :class "weather-desc" :text "${weather_desc2}")
+    ;  )
+    ;  (label :class "weather-temp" :text "${weather_temp2}°")
+    ;)
+
+    ;; Botões de energia (quatro blocos)
+    (box :class "power-row" :orientation "horizontal" :spacing 14 :halign "center"
+      (button :class "pwr" :onclick "systemctl poweroff" (label :text "⏻"))
+      (button :class "pwr" :onclick "systemctl reboot"   (label :text ""))
+      (button :class "pwr" :onclick "systemctl suspend"  (label :text ""))
+      (button :class "pwr" :onclick "loginctl terminate-user $USER" (label :text ""))
+    )
+
+    ;; (opcional) imagem decorativa no rodapé (ex.: gato)
+    (box :class "footer-img" :orientation "vertical" :halign "fill" :valign "center"
+      (image :path "~/.config/eww/assets/cat.png" :image-style "contain")
     )
   )
 )
 
-;; ========================
-;; Vars (atualizadas por scripts)
-;; ========================
+;;; ============================
+;;; VARS / POLLS (atualizados por scripts)
+;;; ============================
+
+;; Relógio dividido em 3 para colorir cada parte
 (defpoll time_h :interval "1s" "date +%H")
 (defpoll time_m :interval "1s" "date +%M")
 (defpoll time_s :interval "1s" "date +%S")
-(defpoll uptime :interval "60s" "~/.config/eww/scripts/uptime.sh")
-(defpoll weather_city :interval "30m" "~/.config/eww/scripts/weather.sh city")
-(defpoll weather_temp :interval "30m" "~/.config/eww/scripts/weather.sh temp")
-(defpoll weather_desc :interval "30m" "~/.config/eww/scripts/weather.sh desc")
+
+;; Uptime
+(defpoll uptime :interval "30s" "~/.config/eww/scripts/uptime.sh")
+
+;; Clima — implementaremos na PARTE 3 (scripts/weather.sh)
+(defpoll weather_city  :interval "30m" "~/.config/eww/scripts/weather.sh city")
+(defpoll weather_temp  :interval "20m" "~/.config/eww/scripts/weather.sh temp")
+(defpoll weather_feels :interval "20m" "~/.config/eww/scripts/weather.sh feels")
+(defpoll weather_desc  :interval "20m" "~/.config/eww/scripts/weather.sh desc")
+
+;; (opcional) segundo local
+;(defpoll weather_city2  :interval "30m" "~/.config/eww/scripts/weather.sh city2")
+;(defpoll weather_temp2  :interval "20m" "~/.config/eww/scripts/weather.sh temp2")
+;(defpoll weather_feels2 :interval "20m" "~/.config/eww/scripts/weather.sh feels2")
+;(defpoll weather_desc2  :interval "20m" "~/.config/eww/scripts/weather.sh desc2")
